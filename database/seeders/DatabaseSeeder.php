@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Customer Demo',
             'email' => 'customer@heavyrent.test',
             'password' => Hash::make('customer123'),
+            'role' => 'pelanggan',
         ]);
 
         // 2. Buat Akun Demo Admin
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin Demo',
             'email' => 'admin@heavyrent.test',
             'password' => Hash::make('admin123'),
+            'role' => 'admin',
         ]);
         
         // Panggil seeder Excavator atau Operator di bawah ini jika ada, contoh:
