@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExcavatorController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\BookingController;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,3 +33,16 @@ Route::delete('/operators/{operator}', [OperatorController::class, 'destroy']);
 Route::get('/bookings', [BookingController::class, 'index']);
 Route::post('/bookings', [BookingController::class, 'store']);
 Route::patch('/bookings/{booking}/status', [BookingController::class, 'updateStatus']);
+
+Route::get('/artisan-reset-uas', function () {
+    try {
+        // Memaksa migrasi fresh dan seeding langsung di dalam server utama
+        Artisan::call('migrate:fresh', [
+            '--force' => true,
+            '--seed' => true,
+        ]);
+        return 'Database HeavyRent BERHASIL di-reset dan di-seed! Silakan kembali ke halaman utama.';
+    } catch (\Exception $e) {
+        return 'Waduh, gagal: ' . $e->getMessage();
+    }
+});
