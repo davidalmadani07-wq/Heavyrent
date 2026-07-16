@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/register', function () {
+    return redirect('/');
+});
+Route::get('/login', function () {
+    return redirect('/');
+});
 
 // ---- Auth ----
 Route::post('/register', [AuthController::class, 'register']);
