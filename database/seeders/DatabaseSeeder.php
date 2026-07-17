@@ -15,11 +15,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Idempotent: aman dijalankan berkali-kali (Railway menjalankan seeder
+        // di setiap deploy), tidak akan membuat duplikat / error unique constraint.
+        User::firstOrCreate(
+            ['email' => 'admin@heavyrent.test'],
+            [
+                'name' => 'Admin HeavyRent',
+                'password' => bcrypt('password'),
+                'role' => 'admin',
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'customer@heavyrent.test'],
+            [
+                'name' => 'Customer Demo',
+                'password' => bcrypt('password'),
+                'role' => 'customer',
+            ]
+        );
     }
 }
