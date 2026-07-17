@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Truck, LogOut, Plus, Pencil, Trash2, Search, CalendarDays,
   CheckCircle2, XCircle, Clock, PackageSearch, Users, ClipboardList,
-  LayoutDashboard, ShieldCheck, X, AlertTriangle, HardHat, ChevronRight
+  LayoutDashboard, ShieldCheck, X, AlertTriangle, HardHat, ChevronRight, KeyRound
 } from "lucide-react";
 
 /* ============================================================
@@ -268,6 +268,28 @@ function AuthScreen({ onLogin, onRegister }) {
               {busy ? "Memproses..." : mode === "login" ? "Masuk" : "Buat Akun"}
             </PrimaryBtn>
           </form>
+
+          {mode === "login" && (
+            <div className="mt-5 p-3.5 rounded-lg" style={{ background: "#F1F1EF" }}>
+              <p className="flex items-center gap-1.5 text-xs font-bold mb-2" style={{ color: "var(--hr-charcoal)" }}>
+                <KeyRound size={13} style={{ color: "var(--hr-yellow)" }} /> Akun Demo (Seeder)
+              </p>
+              <div className="space-y-1.5 text-xs" style={{ color: "var(--hr-steel)" }}>
+                <p>
+                  <span className="font-semibold" style={{ color: "var(--hr-charcoal)" }}>Pelanggan:</span> Email{" "}
+                  <span className="px-1 py-0.5 rounded font-mono" style={{ background: "#E2ECFB", color: "#2452A6" }}>customer@heavyrent.test</span>{" "}
+                  / Pass{" "}
+                  <span className="px-1 py-0.5 rounded font-mono" style={{ background: "#E2ECFB", color: "#2452A6" }}>customer123</span>
+                </p>
+                <p>
+                  <span className="font-semibold" style={{ color: "var(--hr-charcoal)" }}>Admin:</span> Email{" "}
+                  <span className="px-1 py-0.5 rounded font-mono" style={{ background: "#E2ECFB", color: "#2452A6" }}>admin@heavyrent.test</span>{" "}
+                  / Pass{" "}
+                  <span className="px-1 py-0.5 rounded font-mono" style={{ background: "#E2ECFB", color: "#2452A6" }}>admin123</span>
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
