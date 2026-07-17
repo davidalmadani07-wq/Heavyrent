@@ -11,7 +11,7 @@ heavyrent/
 ├── resources/js/
 │   └── HeavyRentApp.jsx      <- root React component (single file)
 └── routes/
-    └── api.php                <- endpoint Laravel yang dikonsumsi frontend
+    └── web.php                <- endpoint Laravel yang dikonsumsi frontend
 ```
 
 ## Tech Stack

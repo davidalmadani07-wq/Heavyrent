@@ -3,30 +3,36 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
+    /**
+     * Seed the application's database.
+     */
     public function run(): void
     {
-        // 1. Buat Akun Demo Pelanggan
-        User::create([
-            'name' => 'Customer Demo',
-            'email' => 'customer@heavyrent.test',
-            'password' => Hash::make('customer123'),
-            'role' => 'pelanggan',
-        ]);
+        // Idempotent: aman dijalankan berkali-kali (Railway menjalankan seeder
+        // di setiap deploy), tidak akan membuat duplikat / error unique constraint.
+        User::firstOrCreate(
+            ['email' => 'admin@heavyrent.test'],
+            [
+                'name' => 'Admin HeavyRent',
+                'password' => bcrypt('password'),
+                'role' => 'admin',
+            ]
+        );
 
-        // 2. Buat Akun Demo Admin
-        User::create([
-            'name' => 'Admin Demo',
-            'email' => 'admin@heavyrent.test',
-            'password' => Hash::make('admin123'),
-            'role' => 'admin',
-        ]);
-        
-        // Panggil seeder Excavator atau Operator di bawah ini jika ada, contoh:
-        // $this->call(ExcavatorSeeder::class);
+        User::firstOrCreate(
+            ['email' => 'customer@heavyrent.test'],
+            [
+                'name' => 'Customer Demo',
+                'password' => bcrypt('password'),
+                'role' => 'customer',
+            ]
+        );
     }
 }

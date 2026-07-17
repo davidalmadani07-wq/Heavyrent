@@ -12,22 +12,16 @@ use Illuminate\Support\Facades\Auth;
 class BookingController extends Controller
 {
     public function index(Request $request)
-{
-    $user = Auth::user();
-    
-    // Jika user belum login, langsung tolak dengan rapi tanpa bikin server crash
-    if (!$user) {
-        return response()->json(['message' => 'Silakan login terlebih dahulu.'], 401);
+    {
+        $user = Auth::user();
+        $query = Booking::query()->orderByDesc('id');
+
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
+        }
+
+        return $query->get();
     }
-
-    $query = Booking::query()->orderByDesc('id');
-
-    if ($user->role !== 'admin') {
-        $query->where('user_id', $user->id);
-    }
-
-    return $query->get();
-}
 
     public function store(Request $request)
     {

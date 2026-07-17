@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExcavatorController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\BookingController;
-use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,30 +32,3 @@ Route::delete('/operators/{operator}', [OperatorController::class, 'destroy']);
 Route::get('/bookings', [BookingController::class, 'index']);
 Route::post('/bookings', [BookingController::class, 'store']);
 Route::patch('/bookings/{booking}/status', [BookingController::class, 'updateStatus']);
-
-// ---- Route Detektif Reset Database MySQL (Akan dihapus setelah UAS) ----
-Route::get('/artisan-reset-uas', function () {
-    try {
-        // Bersihkan cache aplikasi agar konfigurasi segar kembali
-        Artisan::call('config:clear');
-        Artisan::call('cache:clear');
-        $clearOutput = Artisan::output();
-
-        // Jalankan migrasi fresh dan seed secara paksa di MySQL Railway
-        $exitCode = Artisan::call('migrate:fresh', [
-            '--force' => true,
-            '--seed' => true,
-        ]);
-        $migrateOutput = Artisan::output();
-
-        return "
-            <h3>1. Status Pembersihan Cache:</h3>
-            <pre>" . e($clearOutput) . "</pre>
-            
-            <h3>2. Hasil Eksekusi Migrasi MySQL (Exit Code: $exitCode):</h3>
-            <pre>" . e($migrateOutput) . "</pre>
-        ";
-    } catch (\Exception $e) {
-        return 'Waduh, gagal total: ' . $e->getMessage();
-    }
-});
